@@ -79,12 +79,12 @@ int base36_decode_last_block(u8 code[14], u8 plain[], decode_talbe[255])
 ### 封装
 
 ```c
-void base36_decode(u8 code[], int len, u8 plain[], decode_table)
+int base36_decode(u8 code[], int len, u8 plain[], decode_table)
 ```
 
 从 `code` 读取 `len` (必须为 14 的整数倍) 字节进行解码，输出 `len / 14 * 9` 字节到 `plain`。
 
-该函数先解码完整块，最后一块始终当做尾块。
+该函数先解码完整块，最后一块始终当做尾块。返回解码后所有明文的长度。
 
 ### 校验
 
