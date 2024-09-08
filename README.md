@@ -77,7 +77,7 @@ int base36_decode_stream(u8 code[], int len, u8 plain[], decode_table)
 
 If `base36_encode` is called multiple times during encoding, the 14-char-padding(s) may be located in the middle of the codes. In this case, this function must be used for decoding.
 
-This function calls `base36_decode_last_block` every time.
+This function always uses `base36_decode_last_block`, and returns the length of the decoded data.
 
 ### Check
 
@@ -88,7 +88,7 @@ Even if the input code is out of the code table, the decoding functions can stil
 
 ## Demo1
 
-[demo-wsam](demo-wsam)
+[demo-wasm](demo-wasm)
 
 Online: https://etherdream.com/base36/
 
