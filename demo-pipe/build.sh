@@ -1,0 +1,1 @@
+clang main.c -O3 -o base36
