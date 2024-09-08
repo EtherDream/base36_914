@@ -192,3 +192,20 @@ static int base36_decode(
   dst += base36_decode_last_block(src, dst, decode_table);;
   return dst - plain;
 }
+
+
+static int base36_decode_stream(
+  const uint8_t code[],
+        int     len,
+        uint8_t plain[],
+  const uint8_t decode_table[]
+) {
+  const uint8_t* src = code;
+  uint8_t* dst = plain;
+
+  while (src < code + len) {
+    dst += base36_decode_last_block(src, dst, decode_table);
+    src += 14;
+  }
+  return dst - plain;
+}
