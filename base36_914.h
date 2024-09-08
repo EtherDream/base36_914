@@ -124,23 +124,23 @@ static int base36_decode_last_block(
 ) {
   uint8_t flag = decode_table[code[13]];
 
-  if (flag >= 28) {
-    uint8_t code_tmp[14] = {0};
-    memcpy(code_tmp, code, 13);
-
-    uint8_t plain_tmp[9];
-    base36_decode_block(code_tmp, plain_tmp, decode_table);
-
-    int len = flag - 27;
-    if (len > 8) {
-      len = 8;
-    }
-    memcpy(plain, plain_tmp, len);
-    return len;
+  if (flag < 28) {
+    base36_decode_block(code, plain, decode_table);
+    return 9;
   }
 
-  base36_decode_block(code, plain, decode_table);
-  return 9;
+  uint8_t code_tmp[14] = {0};
+  memcpy(code_tmp, code, 13);
+
+  uint8_t plain_tmp[9];
+  base36_decode_block(code_tmp, plain_tmp, decode_table);
+
+  int len = flag - 27;
+  if (len > 8) {
+    len = 8;
+  }
+  memcpy(plain, plain_tmp, len);
+  return len;
 }
 
 
