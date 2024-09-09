@@ -1,10 +1,10 @@
 # Base36_914
 
-A fast and space-efficient Base36 encoding.
+A fast and space-efficient Base36 encoding for large data.
 
 ## About
 
-`Base36_914` encodes `9` bytes into `14` chars per block, with a max space efficiency of 99.5% of the theoretical limit.
+`Base36_914` encodes every `9` bytes as a block into `14` chars, with a max space efficiency of 99.5% of the theoretical limit.
 
 If the remaining data is less than 9 bytes, the output will be padded to 14 chars. So this algorithm is suitable for longer inputs, or input length close to a multiple of 9.
 
@@ -42,7 +42,7 @@ Read `len` bytes from `plain` and write `ceil(len / 9) * 14` bytes to `code`.
 ### Full Block
 
 ```c
-void base36_decode_block(u8 code[14], u8 plain[9], u8 decode_talbe[255])
+void base36_decode_block(u8 code[14], u8 plain[9], u8 decode_talbe[256])
 ```
 
 Read 14 bytes from `code` and write 9 bytes to `plain`.
@@ -52,7 +52,7 @@ The built-in `BASE36_DECODE_TABLE_DEFAULT` can be used for `decode_talbe`.
 ### Last Block
 
 ```c
-int base36_decode_last_block(u8 code[14], u8 plain[], decode_talbe[255])
+int base36_decode_last_block(u8 code[14], u8 plain[], decode_talbe[256])
 ```
 
 Read 14 bytes from `code` and write `len` bytes to `plain`.
