@@ -17,12 +17,9 @@
 </head>
 <body>
   <h1>Base36_914</h1>
-  <p>
-    Base36_914 encodes 9 bytes into 14 chars per block, with a max space efficiency of 99.5% of the theoretical limit.
-  </p>
   <div>👁 Plain:</div>
   <div>
-    <textarea id="txtPlain" maxlength="900000">Hello Base36! 😁</textarea>
+    <textarea id="txtPlain" maxlength="900000">Base36_914 is a fast and space-efficient Base36 encoding for large data, it encodes every 9 bytes as a block into 14 chars, with a max space efficiency of 64.3%, up to 99.5% of the theoretical limit (64.6%).</textarea>
   </div>
   <div>🔢 Code:</div>
   <div>
@@ -42,6 +39,9 @@
     <span id="txtRatio">?</span>%
     (<span id="txtPercent">?</span>%)
   </p>
+  <p>
+    time: <span id="txtTime">?</span>ms
+  </p>
   <script type="module">
     const LIMIT_RATIO = Math.log2(36) / 8
 
@@ -59,9 +59,12 @@
 
     btnEncode.onclick = () => {
       const {written} = new TextEncoder().encodeInto(txtPlain.value, plainBuf)
+      const t0 = performance.now()
       const retLen = exports.EncodePlainBuf(written)
       const retBuf = codeBuf.subarray(0, retLen)
+      const t1 = performance.now()
       txtCode.value = new TextDecoder().decode(retBuf)
+      txtTime.textContent = (t1 - t0).toFixed(1)
       updateRatio(written, retLen)
     }
     btnEncode.onclick()
@@ -72,9 +75,12 @@
         return
       }
       const {written} = new TextEncoder().encodeInto(txtCode.value, codeBuf)
+      const t0 = performance.now()
       const retLen = exports.DecodeCodeBuf(written)
       const retBuf = plainBuf.subarray(0, retLen)
+      const t1 = performance.now()
       txtPlain.value = new TextDecoder().decode(retBuf)
+      txtTime.textContent = (t1 - t0).toFixed(1)
       updateRatio(retLen, written)
     }
   </script>
