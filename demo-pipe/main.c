@@ -19,14 +19,21 @@ void encode() {
 }
 
 void decode() {
+  int remain = 0;
+
   for (;;) {
-    ssize_t code_len = read(STDIN_FILENO, code_buf, sizeof(code_buf));
-    if (code_len <= 0) {
+    int read_len = read(STDIN_FILENO, code_buf + remain, sizeof(code_buf) - remain);
+    if (read_len <= 0) {
       break;
     }
-    int plain_len = base36_decode_stream(code_buf, code_len, plain_buf,
+    int code_len = remain + read_len;
+    remain = code_len % 14;
+
+    int plain_len = base36_decode_stream(code_buf, code_len - remain, plain_buf,
                                          BASE36_DECODE_TABLE_DEFAULT);
     write(STDOUT_FILENO, plain_buf, plain_len);
+
+    memmove(code_buf, code_buf + code_len - remain, remain);
   }
 }
 
