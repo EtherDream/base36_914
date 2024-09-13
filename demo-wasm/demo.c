@@ -3,8 +3,8 @@
 #include <emscripten.h>
 #include "../base36_914.h"
 
-static uint8_t plain_buf[100000 * 9];
-static uint8_t code_buf[100000 * 14];
+static uint8_t plain_buf[1000000 * 9];
+static uint8_t code_buf[1000000 * 14];
 
 
 EMSCRIPTEN_KEEPALIVE
